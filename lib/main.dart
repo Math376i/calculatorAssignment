@@ -7,58 +7,68 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData.dark(),
       themeMode: ThemeMode.dark,
-      home: const CalcultorScreen(),
+      home: const CalculatorScreen(),
     );
   }
 }
 
-class CalcultorScreen extends StatelessWidget {
-  const CalcultorScreen({Key? key}) : super(key: key);
+class CalculatorScreen extends StatefulWidget {
+  const CalculatorScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    const spacing = 5.0;
+  State<CalculatorScreen> createState() => _calculatorScreen();
+}
+
+class _calculatorScreen extends State<CalculatorScreen> {
+  @override
+  Widget build(BuildContext buildContext) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Calculator'),
-      ),
+      appBar: AppBar(title: const Text('Calculator')),
       body: Column(children: [
-        _inputField(Colors.yellow),
-        _inputField(Colors.pink),
-        _StackField()
-      ]),
+        _inputfield(Colors.yellow),
+        _calculatorInput()]),
     );
   }
 
-  Row _inputField(Color colors) {
-    return Row(
-      children: [
-        Flexible(
-            child: Container(
+  Row _inputfield(Color color) {
+    return Row(children: [
+      Flexible(
+        child: Container(
           height: 100,
-          color: colors,
-        ))
-      ],
-    );
+          color: color,
+        ),
+      ),
+    ]);
   }
 
-  Column _StackField() {
+  Column _calculatorInput() {
     return Column(
       children: [
-        Container( child:
-        TextField(
-          decoration:
-              InputDecoration(border: OutlineInputBorder(), hintText: "Input"),
-        ), color: Colors.green,)
+        Container(
+          child: TextField(
+            decoration: InputDecoration(
+                border: OutlineInputBorder(), hintText: 'Field'),
+          ),
+          height: 50,
+          color: Colors.red,
+        )
       ],
     );
   }
 
-
+  Column _stackfield() {
+    return Column(
+      children: [
+        TextField(
+          decoration:
+          InputDecoration(border: OutlineInputBorder(), hintText: 'Stack'),
+        )
+      ],
+    );
+  }
 }
