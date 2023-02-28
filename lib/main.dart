@@ -35,40 +35,19 @@ class _calculatorScreen extends State<CalculatorScreen> {
             children: [
               FilledButton(
                 onPressed: _placeHolder,
-                child: const Text("Hopefully works"),
+                child: const Text("+"),
               ),
               FilledButton(
                 onPressed: _placeHolder,
-                child: const Text("?"),
+                child: const Text("7"),
               ),
               FilledButton(
                 onPressed: _placeHolder,
-                child: Text("Off course"),
+                child: const Text("8"),
               ),
               FilledButton(
                 onPressed: _placeHolder,
-                child: Text("Off course"),
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              FilledButton(
-                onPressed: _placeHolder,
-                child: const Text("Hopefully works"),
-              ),
-              FilledButton(
-                onPressed: _placeHolder,
-                child: const Text("?"),
-              ),
-              FilledButton(
-                onPressed: _placeHolder,
-                child: Text("Off course"),
-              ),
-              FilledButton(
-                onPressed: _placeHolder,
-                child: Text("Off course"),
+                child: const Text("9"),
               ),
             ],
           ),
@@ -77,19 +56,19 @@ class _calculatorScreen extends State<CalculatorScreen> {
             children: [
               FilledButton(
                 onPressed: _placeHolder,
-                child: const Text("Hopefully works"),
+                child: const Text("-"),
               ),
               FilledButton(
                 onPressed: _placeHolder,
-                child: const Text("?"),
+                child: const Text("4"),
               ),
               FilledButton(
                 onPressed: _placeHolder,
-                child: Text("Off course"),
+                child: const Text("5"),
               ),
               FilledButton(
                 onPressed: _placeHolder,
-                child: Text("Off course"),
+                child: const Text("6"),
               ),
             ],
           ),
@@ -98,19 +77,40 @@ class _calculatorScreen extends State<CalculatorScreen> {
             children: [
               FilledButton(
                 onPressed: _placeHolder,
-                child: const Text("Hopefully works"),
+                child: const Text("*"),
               ),
               FilledButton(
                 onPressed: _placeHolder,
-                child: const Text("?"),
+                child: const Text("1"),
               ),
               FilledButton(
                 onPressed: _placeHolder,
-                child: Text("Off course"),
+                child: const Text("2"),
               ),
               FilledButton(
                 onPressed: _placeHolder,
-                child: Text("Off course"),
+                child: const Text("3"),
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              FilledButton(
+                onPressed: _placeHolder,
+                child: const Text("/"),
+              ),
+              FilledButton(
+                onPressed: _placeHolder,
+                child: const Text("Enter"),
+              ),
+              FilledButton(
+                onPressed: _placeHolder,
+                child: const Text("0"),
+              ),
+              FilledButton(
+                onPressed: _placeHolder,
+                child: const Text("Clear"),
               ),
             ],
           )
