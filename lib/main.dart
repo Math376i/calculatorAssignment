@@ -118,4 +118,12 @@ class _calculatorScreen extends State<CalculatorScreen> {
   }
 
   void _placeHolder() {}
+
+  void _subtract() {}
+
+  void _addition() {}
+
+  void _division() {}
+
+  void _multiply() {}
 }
