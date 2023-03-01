@@ -1,8 +1,7 @@
 import 'dart:io';
 
+import 'package:calculator_view/src/commands.dart';
 import 'package:flutter/material.dart';
-
-import 'commands.dart';
 import 'stack.dart';
 
 void main() {
@@ -17,7 +16,6 @@ final commands = [
   Add(),
   Subtract(),
   Multiply(),
-  Noop()
 ];
 
 class MyApp extends StatelessWidget {
@@ -95,7 +93,7 @@ class _calculatorScreen extends State<CalculatorScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               FilledButton(
-                onPressed: _placeHolder,
+                onPressed: () => Add,
                 child: const Text("+"),
               ),
               FilledButton(
@@ -108,7 +106,7 @@ class _calculatorScreen extends State<CalculatorScreen> {
                 child: const Text("8"),
               ),
               FilledButton(
-                onPressed: _placeHolder,
+                onPressed: () => _numPress('9'),
                 child: const Text("9"),
               ),
             ],
@@ -117,19 +115,19 @@ class _calculatorScreen extends State<CalculatorScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               FilledButton(
-                onPressed: _placeHolder,
+                onPressed: () => Subtract,
                 child: const Text("-"),
               ),
               FilledButton(
-                onPressed: _placeHolder,
+                onPressed: () => _numPress('4'),
                 child: const Text("4"),
               ),
               FilledButton(
-                onPressed: _placeHolder,
+                onPressed: () => _numPress('5'),
                 child: const Text("5"),
               ),
               FilledButton(
-                onPressed: _placeHolder,
+                onPressed: () => _numPress('6'),
                 child: const Text("6"),
               ),
             ],
@@ -138,19 +136,19 @@ class _calculatorScreen extends State<CalculatorScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               FilledButton(
-                onPressed: _placeHolder,
+                onPressed: () => Multiply,
                 child: const Text("*"),
               ),
               FilledButton(
-                onPressed: _placeHolder,
+                onPressed: () => _numPress('1'),
                 child: const Text("1"),
               ),
               FilledButton(
-                onPressed: _placeHolder,
+                onPressed: () => _numPress('2'),
                 child: const Text("2"),
               ),
               FilledButton(
-                onPressed: _placeHolder,
+                onPressed: () => _numPress('3'),
                 child: const Text("3"),
               ),
             ],
@@ -159,7 +157,7 @@ class _calculatorScreen extends State<CalculatorScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               FilledButton(
-                onPressed: _placeHolder,
+                onPressed: () => Divide,
                 child: const Text("/"),
               ),
               FilledButton(
@@ -167,11 +165,11 @@ class _calculatorScreen extends State<CalculatorScreen> {
                 child: const Text("Enter"),
               ),
               FilledButton(
-                onPressed: _placeHolder,
+                onPressed: () => _numPress('0'),
                 child: const Text("0"),
               ),
               FilledButton(
-                onPressed: _placeHolder,
+                onPressed: () => Clear,
                 child: const Text("Clear"),
               ),
             ],

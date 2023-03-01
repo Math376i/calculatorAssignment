@@ -7,13 +7,13 @@ typedef Registry = List<num>;
 typedef UndoFunction = Registry Function(Registry);
 
 /// Application state is a stack of numbers (registry) and stack of undo functions (history)
-class State {
+class StateCommands {
   final Registry registry;
   final List<UndoFunction> history;
-  const State({required this.registry, required this.history});
-  State.empty() : this(registry: [], history: []);
+  const StateCommands({required this.registry, required this.history});
+  StateCommands.empty() : this(registry: [], history: []);
   copy({required Registry registry, required UndoFunction undo}) =>
-      State(registry: registry, history: [...history, undo]);
+      StateCommands(registry: registry, history: [...history, undo]);
 }
 
 /// Factory functions for commands
@@ -46,7 +46,7 @@ abstract class Command {
   bool accept(List<num> registry) => names.contains(input);
 
   /// Executing the command returns the next application state
-  State execute(State state);
+  StateCommands execute(StateCommands stateCommands);
 }
 
 class Enter extends Command {
@@ -57,10 +57,10 @@ class Enter extends Command {
       : number = num.tryParse(input),
         super(input);
   accept(registry) => number != null;
-  execute(state) => state.copy(
-    registry: [...state.registry, number!],
-    undo: (registry) => [...registry.take(registry.length - 1)],
-  );
+  execute(stateCommands) => stateCommands.copy(
+        registry: [...stateCommands.registry, number!],
+        undo: (registry) => [...registry.take(registry.length - 1)],
+      );
 }
 
 class Clear extends Command {
@@ -92,17 +92,17 @@ class Undo extends Command {
   final description =
       'Undo previously executed command using the undo function in history stack';
   Undo(super.input);
-  execute(state) => State(
-    registry: state.history.last(state.registry),
-    history: [...state.history.take(state.history.length - 1)],
-  );
+  execute(state) => StateCommands(
+        registry: state.history.last(state.registry),
+        history: [...state.history.take(state.history.length - 1)],
+      );
 }
 
 class Help extends Command {
   final names = ['help', 'h', '?'];
   final description = 'Print help message';
   Help(super.input);
-  execute(State state) {
+  execute(StateCommands state) {
     print('Available commands are:\n');
     commands.map((factory) => factory('')).forEach((command) {
       print(command.names.join(', '));
@@ -162,7 +162,7 @@ class Invalid extends Command {
   final description = '';
   Invalid(super.input);
   accept(List<num> registry) => true;
-  execute(State state) {
+  execute(StateCommands state) {
     print('Invalid command "$input"');
     return state;
   }
