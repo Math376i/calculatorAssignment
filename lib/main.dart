@@ -8,16 +8,6 @@ void main() {
   runApp(const MyApp());
 }
 
-final commands = [
-  Enter(),
-  Print(),
-  Exit(),
-  Clear(),
-  Add(),
-  Subtract(),
-  Multiply(),
-];
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
