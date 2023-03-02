@@ -55,14 +55,6 @@ class _calculatorScreen extends State<CalculatorScreen> {
     });
   }
 
-  void _command(String input) {
-    if (currentStack == null) {
-      commands
-          .firstWhere((element) => element.accept(currentStack, input))
-          .execute(currentStack, input);
-    }
-  }
-
   @override
   Widget build(BuildContext buildContext) {
     return Scaffold(
