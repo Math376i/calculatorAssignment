@@ -1,8 +1,6 @@
 import 'dart:io';
-
-import 'package:calculator_view/src/commands.dart';
 import 'package:flutter/material.dart';
-import 'stack.dart';
+import 'src/commands.dart';
 
 void main() {
   runApp(const MyApp());
@@ -29,29 +27,46 @@ class CalculatorScreen extends StatefulWidget {
 }
 
 class _calculatorScreen extends State<CalculatorScreen> {
-  var currentNumberInString =
-      ""; // Nuvaerene String som bruges til input af nummer til vidderfoersel til stack,
-  var currentStack =
-      InputStack<int>(); // Den nuvaerende stack med alle tilfoejede numre
-  var currentWorkingInt = 0; // Bruges til vidersendlse af int til stack
+  var currentNumberInString = "";
 
-  // TODO: Taenker vi skal have lavet TextField's til disabled saa man ikke som bruger kan redigere dem direkte.
-  // Alternativt skal vi bruge noget andet end TextField,
-  //eventuelt bare en container med text i sig eller hvad end vi kan finde paa
+  Registry viewRegistry = [];
+  var stateCommand = const StateCommands(
+    registry: [],
+    history: [],
+  );
 
-  void _stackAdd(int number) {}
+  StateCommands transform(StateCommands stateCommand, String input) => commands
+      .map((commandFactory) => commandFactory(input))
+      .firstWhere((command) => command.accept(stateCommand.registry))
+      .execute(stateCommand);
 
-  void _enter(int number) {
+  void doMath(String command) {
+    stateCommand = transform(stateCommand, command);
     setState(() {
-      currentStack.push(number);
+      viewRegistry = stateCommand.registry;
+    });
+  }
+
+  void _enter() {
+    setState(() {
+      stateCommand = transform(stateCommand, currentNumberInString);
+      viewRegistry = stateCommand.registry;
+      currentNumberInString = "";
     });
   }
 
   void _numPress(String number) {
     currentNumberInString = currentNumberInString + number;
-    var num = int.parse(currentNumberInString);
+    setState(() {});
+  }
+
+  void clearStack() {
     setState(() {
-      currentWorkingInt = num;
+      if (currentNumberInString == "") {
+        stateCommand.registry.clear();
+      }
+      currentNumberInString = "";
+      viewRegistry = stateCommand.registry;
     });
   }
 
@@ -63,7 +78,7 @@ class _calculatorScreen extends State<CalculatorScreen> {
           Column(
             children: [
               TextField(
-                decoration: InputDecoration(labelText: "$currentStack"),
+                decoration: InputDecoration(labelText: "$viewRegistry"),
               ),
               TextField(
                 decoration:
@@ -75,12 +90,11 @@ class _calculatorScreen extends State<CalculatorScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               FilledButton(
-                onPressed: () => Add,
+                onPressed: () => doMath("+"),
                 child: const Text("+"),
               ),
               FilledButton(
-                onPressed: () => _numPress(
-                    "7"), // <== Denne er lavet som jeg var i gang med, og resten taenker jeg skal foelge
+                onPressed: () => _numPress("7"),
                 child: const Text("7"),
               ),
               FilledButton(
@@ -88,7 +102,7 @@ class _calculatorScreen extends State<CalculatorScreen> {
                 child: const Text("8"),
               ),
               FilledButton(
-                onPressed: () => _numPress('9'),
+                onPressed: () => _numPress("9"),
                 child: const Text("9"),
               ),
             ],
@@ -97,7 +111,7 @@ class _calculatorScreen extends State<CalculatorScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               FilledButton(
-                onPressed: () => Subtract,
+                onPressed: () => doMath("-"),
                 child: const Text("-"),
               ),
               FilledButton(
@@ -118,7 +132,7 @@ class _calculatorScreen extends State<CalculatorScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               FilledButton(
-                onPressed: () => Multiply,
+                onPressed: () => doMath("*"),
                 child: const Text("*"),
               ),
               FilledButton(
@@ -139,11 +153,11 @@ class _calculatorScreen extends State<CalculatorScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               FilledButton(
-                onPressed: () => Divide,
+                onPressed: () => doMath("/"),
                 child: const Text("/"),
               ),
               FilledButton(
-                onPressed: () => _enter(currentWorkingInt),
+                onPressed: () => _enter(),
                 child: const Text("Enter"),
               ),
               FilledButton(
@@ -151,7 +165,7 @@ class _calculatorScreen extends State<CalculatorScreen> {
                 child: const Text("0"),
               ),
               FilledButton(
-                onPressed: () => Clear,
+                onPressed: () => clearStack(),
                 child: const Text("Clear"),
               ),
             ],

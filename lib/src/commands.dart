@@ -19,15 +19,11 @@ class StateCommands {
 /// Factory functions for commands
 const commands = [
   Enter.new,
-  Print.new,
-  Exit.new,
   Clear.new,
   Add.new,
   Subtract.new,
   Multiply.new,
   Divide.new,
-  Undo.new,
-  Help.new,
   Invalid.new
 ];
 
@@ -68,48 +64,6 @@ class Clear extends Command {
   final names = ['clear', 'c'];
   final description = 'Clear the registry';
   execute(state) => state.copy(registry: [], undo: (_) => state.registry);
-}
-
-class Print extends Command {
-  final names = ['print', 'p', ''];
-  final description = 'Print registry';
-  Print(super.input);
-  execute(state) {
-    print(state.registry);
-    return state;
-  }
-}
-
-class Exit extends Command {
-  Exit(super.input);
-  final names = ['exit', 'quit', 'q'];
-  final description = 'Exit process';
-  execute(state) => exit(1);
-}
-
-class Undo extends Command {
-  final names = ['undo', 'u'];
-  final description =
-      'Undo previously executed command using the undo function in history stack';
-  Undo(super.input);
-  execute(state) => StateCommands(
-        registry: state.history.last(state.registry),
-        history: [...state.history.take(state.history.length - 1)],
-      );
-}
-
-class Help extends Command {
-  final names = ['help', 'h', '?'];
-  final description = 'Print help message';
-  Help(super.input);
-  execute(StateCommands state) {
-    print('Available commands are:\n');
-    commands.map((factory) => factory('')).forEach((command) {
-      print(command.names.join(', '));
-      print('\t\t${command.description}\n');
-    });
-    return state;
-  }
 }
 
 /// Base class for arithmetic operation consuming two operants from registry
