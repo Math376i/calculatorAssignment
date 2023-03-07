@@ -74,7 +74,8 @@ class _calculatorScreen extends State<CalculatorScreen> {
   Widget build(BuildContext buildContext) {
     return Scaffold(
         appBar: AppBar(title: const Text('Calculator')),
-        body: Column(children: [
+        body:
+            Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
           Column(
             children: [
               TextField(
