@@ -14,13 +14,39 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData.dark(),
       themeMode: ThemeMode.dark,
-      home: const CalculatorScreen(),
+      home: const StateChanger(),
+    );
+  }
+}
+
+class StateChanger extends StatefulWidget {
+  const StateChanger({super.key});
+
+  static StateChangerState of(BuildContext context) {
+    return context.findAncestorStateOfType<StateChangerState>()!;
+  }
+
+  @override
+  State<StateChanger> createState() => StateChangerState();
+}
+
+class StateChangerState extends State<StateChanger> {
+  StateCommands state = StateCommands.empty();
+  String number = "";
+
+  @override
+  Widget build(BuildContext context) {
+    return StateProvider(
+      state: state,
+      number: number,
+      child: const CalculatorScreen(title: "Calculator Screen"),
     );
   }
 }
 
 class CalculatorScreen extends StatefulWidget {
-  const CalculatorScreen({Key? key}) : super(key: key);
+  const CalculatorScreen({super.key, required this.title});
+  final String title;
 
   @override
   State<CalculatorScreen> createState() => _calculatorScreen();
@@ -175,4 +201,25 @@ class _calculatorScreen extends State<CalculatorScreen> {
   }
 
   void _placeHolder() {}
+}
+
+class StateProvider extends InheritedWidget {
+  final StateCommands state;
+  final String number;
+
+  const StateProvider({
+    required this.state,
+    required this.number,
+    super.key,
+    required super.child,
+  });
+
+  @override
+  bool updateShouldNotify(covariant InheritedWidget oldWidget) {
+    return true;
+  }
+
+  static StateProvider of(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType<StateProvider>()!;
+  }
 }
